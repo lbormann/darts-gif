@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Darts-gifer</title>
+    <style>
+        .success{
+            color: greenyellow;
+        }
+        .failure{
+            color: red;
+        }
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            background-color: black;
+            color: white;
+            text-align: center;
+        }
+
+        img {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+    </style>
+</head>
+
+<body>
+    <img id="image"/>
+    <h1 id="status">Disconnected!</h1>
+
+    <script>
+        let socket;
+        let reconnectInterval = 1000; 
+        const image = document.getElementById('image');
+        const state = document.getElementById('status');
+
+        image.addEventListener('load', function () {
+            image.style.visibility = "visible";
+            resizeImage();
+        });
+
+        function setupWebSocketConnection() {
+            // TODO 
+            socket = new WebSocket("ws://192.168.3.19:8039");
+            socket.onopen = function() {
+                console.log("Socket: connected!");
+                state.innerText = "CONNECTED!";
+                state.classList = "success";
+            };
+            socket.onclose = function() {
+                console.log("Socket: disconnected!");
+                state.innerText = "DISCONNECTED!";
+                state.classList = "failure";
+                setTimeout(setupWebSocketConnection, reconnectInterval);
+            };
+            socket.onmessage = function(event) {
+                let data = JSON.parse(event.data);
+                if (data.event === "mirror") {
+                    state.style.visibility = 'hidden';
+                    displayImage(data);
+                    
+                }
+                else if (data.event === "mirror-clear"){
+                    console.log("Clear image");
+                    image.style.visibility = "hidden";
+                }
+            };
+        }
+        
+        async function loadImage(file) {
+            const response = await fetch(`/images/${file}`);
+            const blob = await response.blob();
+            const url = URL.createObjectURL(blob);
+            return url;
+        }
+        async function displayImage(data) {
+            console.log("Display image: ", data.file);
+            const imageUrl = await loadImage(data.file);
+            image.src = imageUrl;
+        }
+
+        function resizeImage() {
+            const aspectRatio = image.naturalWidth / image.naturalHeight;
+            const windowHeight = window.innerHeight;
+            const windowWidth = window.innerWidth;
+            const windowAspectRatio = windowWidth / windowHeight;
+
+            if (aspectRatio > windowAspectRatio) {
+                image.style.width = '95%';
+                image.style.height = 'auto';
+            } else {
+                image.style.width = 'auto';
+                image.style.height = '95%';
+            }
+        }
+
+        window.addEventListener('resize', resizeImage);
+        window.onload = function() {
+            setupWebSocketConnection();
+        };
+    </script>
+
+</body>
+
+</html>

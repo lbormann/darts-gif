@@ -1,0 +1,7 @@
+start-custom.bat
+build
+dist
+*.spec
+*.gif
+*.jpg
+*.png
