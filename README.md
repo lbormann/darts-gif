@@ -201,8 +201,9 @@ It may be buggy. I've just coded it for fast fun with https://autodarts.io. You 
 - add start stuff
 
 
-## LAST WORDS
+## Resources
 
-Make sure your gifs are interesting ;)
-Thanks to Timo for awesome https://autodarts.io. It will be huge!
+Icon by <a href="https://icon-icons.com/de/symbol/Foto-Fotografie-Bild/108525"></a> on <a href="https://icon-icons.com">icon-icons.com</a>
+License <a href="https://creativecommons.org/licenses/by/4.0/">Attribution 4.0 International (CC BY 4.0)</a>                         
+   
 
