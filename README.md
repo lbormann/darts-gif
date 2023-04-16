@@ -1,4 +1,5 @@
 # AUTODARTS-GIF
+[![Downloads](https://img.shields.io/github/downloads/lbormann/autodarts-gif/total.svg)](https://github.com/lbormann/autodarts-gif/releases/latest)
 
 Autodarts-gif displays images accordingly to the state of a https://autodarts.io game. A running instance of https://github.com/lbormann/autodarts-caller is needed that sends thrown points from https://autodarts.io to this application.
 
