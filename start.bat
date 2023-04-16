@@ -1,22 +1,22 @@
 PUSHD .
 python "autodarts-gif.py" ^
--MP "<absolute-folder-to-your-image-files>"
+-MP "<absolute-folder-to-your-image-files>" ^
 -CON "127.0.0.1:8079" ^
 -HFO "51" ^
--HF "party hard" ^
--G "1" "2" "flex" ^
--M "2" ^
--B "3" ^
--S26 "3" ^
--S45 "3" ^
--S41 "3" ^
--S60 "3" ^
--S80 "3" ^
--S100 "3" ^
--S120 "3" ^
--S140 "3" ^
--S180 "3" ^
--A1 "1-60" "4" ^
--A2 "16-30" "4" ^
--A3 "61-120" "4" ^
+-HF "party" ^
+-G "winner" "win" "flex" ^
+-M "loose" "missed" ^
+-B "busted" "throw" ^
+-S26 "washing machine" "washer" ^
+-S45 "darts 45|5" ^
+-S41 "darts 41|5" ^
+-S60 "darts 60" ^
+-S80 "darts 80" ^
+-S100 "darts 100" ^
+-S120 "darts 120" ^
+-S140 "darts 140" ^
+-S180 "darts 180" ^
+-A1 "1-60" "darts good" ^
+-A2 "61-100" "darts perfect" ^
+-A3 "101-180" "god" "master" ^
 -WEB "0"

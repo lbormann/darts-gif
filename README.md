@@ -1,6 +1,6 @@
 # AUTODARTS-GIF
 
-Autodarts-gif displays your favorite images accordingly to the state of a https://autodarts.io game. A running instance of https://github.com/lbormann/autodarts-caller is needed that sends the thrown points from https://autodarts.io to this application.
+Autodarts-gif displays images accordingly to the state of a https://autodarts.io game. A running instance of https://github.com/lbormann/autodarts-caller is needed that sends thrown points from https://autodarts.io to this application.
 
 Tested on Windows 10 & 11 Pro x64, Python 3.9.7
 
@@ -19,46 +19,28 @@ Tested on Windows 10 & 11 Pro x64, Python 3.9.7
 | Random Checkout | :heavy_check_mark: |
 | Count Up | |
 
-## Showcase
 
-#### Images:
-<img src="https://github.com/lbormann/autodarts-gif/blob/main/showcase/1.jpg?raw=true">
+<img src="https://github.com/lbormann/autodarts-gif/blob/main/showcase/sc.gif?raw=true">
 
 
 
 ## INSTALL INSTRUCTION
 
-### Desktop-OS (cross-platform | Windows - Linux - MacOS)
+### Desktop-OS: Windows - Linux - MacOS
 
 - If you're running a desktop-driven OS (GUI) it's recommended to use autodarts-desktop: https://github.com/lbormann/autodarts-desktop
 
 
-### Windows - Linux - MacOS
+### Headless-OS: Windows - Linux - MacOS
 
-- Download the executable in the release section.
-
-
-### By Source
-
-#### Setup python3
-
-- Download and install python 3.x.x for your specific os.
-- Download and install pip.
-
-
-#### Get the project
-
-    git clone https://github.com/lbormann/autodarts-gif.git
-
-Go to download-directory and type:
-
-    pip install -r requirements.txt
+- Download the executable in the release section. On app-start, make sure you set -WEB to "1" (display images with local webserver)
 
 
 ## Setup Images
 
-Put your image-files (gif, jpeg, jpg, png) in media-directory.
-
+If you want to display local images you must copy them to media-directory (-MP).
+In case you prefer fetching random images out of the web you neither need to configure a media_path (-MP) nor you need to copy images.
+Of course you can have a mixed configuration.
 
 ## RUN IT
 
@@ -77,21 +59,11 @@ Example: C:\Downloads\autodarts-gif.exe -A1 "0-14" "bad score"
 Save changes.
 Click on the shortcut to start the application.
 
-
-### Run by source
-
-    python3 autodarts-gif.py -A1 "0-14" "bad score"
-
-
-
-### Setup autostart [linux] (optional)
-
-Read on autodarts-caller`s (adjust "autodarts-caller"-occurrences with autodarts-gif)
-
  
 ### Arguments
 
 - -CON / --connection [OPTIONAL] [Default: "127.0.0.1:8079"] 
+- -MP / --media_path [OPTIONAL] [Default: None]
 - -HFO / --high_finish_on [OPTIONAL] [Default: None] [Possible values: 2 .. 170] 
 - -HF / --high_finish_images [OPTIONAL] [MULTIPLE ENTRIES POSSIBLE] [Default: None] [Possible values: See below] 
 - -G / --game_won_images [OPTIONAL] [MULTIPLE ENTRIES POSSIBLE] [Default: None] [Possible values: See below] 
@@ -99,12 +71,16 @@ Read on autodarts-caller`s (adjust "autodarts-caller"-occurrences with autodarts
 - -B / --busted_images [OPTIONAL] [MULTIPLE ENTRIES POSSIBLE] [Default: None] [Possible values: See below] 
 - -S{0-180} / --score_{0-180}_images [OPTIONAL] [MULTIPLE ENTRIES POSSIBLE] [Default: None] [Possible values: See below] 
 - -A{1-12} / --score_area_{1-12}_images [OPTIONAL] [MULTIPLE ENTRIES POSSIBLE] [Default: None] [Possible values: See below] 
-
+- -WEB / --web_gif [OPTIONAL] [Default: 0] [Possible values: 0|1|2] 
 
 
 #### **-CON / --connection**
 
 Host address to data-feeder (autodarts-caller). By Default this is '127.0.0.1:8079' (means your local ip-address / usually you do NOT need to change this)
+
+#### **-MP / --media_path**
+
+You can set an absolute path to your media-file-directory, Make sure your sound-files are in a supported file-format (gif,png,jpg,jpeg). Moreover make sure the given path doesn't reside inside main-directory (autodarts-gif).
     
 #### **-HFO / --high_finish_on**
 
@@ -140,6 +116,9 @@ Define one image or a list of images. If you define a list, the program will ran
 Besides the definition of single score-values you can define up to 12 score-areas.
 Define one image or a list of images. If you define a list, the program will randomly choose at runtime. For examples see below!
 
+#### **-WEB / --web_gif**
+
+If you set this to a '1' or '2' the app will host a web-endpoint to transfer every display-action to connected devices. A value '1' will display images only on connected devices. Value '2' will display images locally and on connected devices.
 
 _ _ _ _ _ _ _ _ _ _
 
@@ -149,23 +128,17 @@ _ _ _ _ _ _ _ _ _ _
 
 | Argument | [condition] | image 1 | image 2 | image 3 | ... |
 | --  | -- | -- | --  | -- | -- | 
-|-B |  | goofy | pluto | | | |
-|-A1 | 0-15 | donald | party | fun | | |
-|-A2 | 16-60 | woow | | | 
+|-B | | busted | throw | | | |
+|-A1 | 0-15 | bad | next | sad | | |
+|-A2 | 16-60 | hi\\|3 | | | 
 
-The first argument-definition shows the event 'Busted': Busting will result in displaying one of the 2 defined images: goofy or pluto.
+The first argument-definition shows the event 'Busted': Busting will result in display one of the 2 defined images: "busted" or "throw". Now the intern magic happens: If "busted" is a supported image-file, placed in media-directory (-MP) the app will use this file, otherwise it will use the term "busted" as a search-input to find a random image on the web. This mechanismn applies to every configured entry. In our example "throw" could be a local image-file or will be resolved to a random web-image.
 
-The second argument-definition shows a 'score-area': recognized scores between 0 and 15 will result in displaying one of the 3 images: donal, party or fun. 
+The second argument-definition shows a 'score-area': recognized scores between 0 and 15 will result in display one of the 3 images: bad, next or sad. 
 
-The third argument-definition shows a 'score-area': recognized scores between 16 and 60 result in displaying wow.
+The third argument-definition shows a 'score-area': recognized scores between 16 and 60 result in display the image "hi" for a custom duration of 3 seconds. If you don't define a duration-key the application defaults to 0 which means unlimited duration til dart-pull appears.
 
-* To set a preset or playlists, use the displayed ID in gif! Moreover you can set a custom duration (Except -IDE)
-
-    syntax: **"ps|{ID}|{seconds}"**
-
-* If you have problems do not hesitate to have a look at example file!
-
-    learn at: **start.bat**
+If don't understand have a look at the example file **start.bat**
 
 
 
@@ -216,15 +189,10 @@ It may be buggy. I've just coded it for fast fun with https://autodarts.io. You 
 
 ## TODOs
 
+- add more sites
+- improve desktop gif-performance
 - care bot (json-events!)
-- core display fails (on duration?)
-- Remove duration (custom)
-- add image-platforms (use them randomly -> avail if api-key is set)
-- TODOs
-- Improve README
-- ip 0.0.0.0 should work!
-- download every gif in media-directory
-
+- make port(s) configurable
 
 ### Done
 

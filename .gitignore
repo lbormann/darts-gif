@@ -1,6 +1,7 @@
 start-custom.bat
 build
 dist
+*.txt
 *.spec
 *.gif
 *.jpg
