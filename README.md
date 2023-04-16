@@ -5,6 +5,8 @@ Autodarts-gif displays images accordingly to the state of a https://autodarts.io
 
 Tested on Windows 10 & 11 Pro x64, Python 3.9.7
 
+<img src="https://github.com/lbormann/autodarts-gif/blob/main/showcase/sc.gif?raw=true">
+
 
 ## COMPATIBILITY
 
@@ -19,10 +21,6 @@ Tested on Windows 10 & 11 Pro x64, Python 3.9.7
 | Round the World | |
 | Random Checkout | :heavy_check_mark: |
 | Count Up | |
-
-
-<img src="https://github.com/lbormann/autodarts-gif/blob/main/showcase/sc.gif?raw=true">
-
 
 
 ## INSTALL INSTRUCTION
