@@ -40,19 +40,19 @@ jobs:
         include:
           - os: macos-10
             TARGET: macos
-            CMD_BUILD: pyinstaller -F -n autodarts-gif-mac -i resources/autodarts-gif.icns autodarts-gif.py 
+            CMD_BUILD: pyinstaller -F -n autodarts-gif-mac -i resources/autodarts-gif.icns --add-data "templates:templates" autodarts-gif.py
             OUT_FILE_NAME: autodarts-gif-mac
             ASSET_MIME: application/zip
 
           - os: ubuntu-20.04
             TARGET: ubuntu
-            CMD_BUILD: pyinstaller -F -n autodarts-gif -i resources/autodarts-gif.svg autodarts-gif.py
+            CMD_BUILD: pyinstaller -F -n autodarts-gif -i resources/autodarts-gif.svg --add-data "templates:templates" autodarts-gif.py
             OUT_FILE_NAME: autodarts-gif
             ASSET_MIME: application/octet-stream
 
           - os: windows-2022
             TARGET: windows
-            CMD_BUILD: pyinstaller -F -n autodarts-gif -i resources/autodarts-gif.ico autodarts-gif.py
+            CMD_BUILD: pyinstaller -F -n autodarts-gif -i resources/autodarts-gif.ico --add-data "templates;templates" autodarts-gif.py
             OUT_FILE_NAME: autodarts-gif.exe
             ASSET_MIME: application/vnd.microsoft.portable-executable
     steps:
