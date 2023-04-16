@@ -3,6 +3,4 @@ build
 dist
 *.txt
 *.spec
-*.gif
-*.jpg
-*.png
+darts_random.gif
