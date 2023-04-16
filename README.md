@@ -81,7 +81,7 @@ Host address to data-feeder (autodarts-caller). By Default this is '127.0.0.1:80
 
 #### **-MP / --media_path**
 
-You can set an absolute path to your media-file-directory, Make sure your sound-files are in a supported file-format (gif,png,jpg,jpeg). Moreover make sure the given path doesn't reside inside main-directory (autodarts-gif).
+You can set an absolute path to your media-file-directory, Make sure your image-files are in a supported file-format (gif,png,jpg,jpeg). Moreover make sure the given path doesn't reside inside main-directory (autodarts-gif).
     
 #### **-HFO / --high_finish_on**
 
