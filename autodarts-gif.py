@@ -1,4 +1,5 @@
 import os
+import sys
 from pathlib import Path
 import platform
 import random
@@ -39,7 +40,7 @@ main_directory = os.path.dirname(os.path.realpath(__file__))
 
 
 
-VERSION = '1.0.1'
+VERSION = '1.0.2'
 
 BOGEY_NUMBERS = [169, 168, 166, 165, 163, 162, 159]
 SUPPORTED_CRICKET_FIELDS = [15, 16, 17, 18, 19, 20, 25]
@@ -454,8 +455,16 @@ def index():
 @app.route('/images/<path:file_id>', methods=['GET'])
 def file(file_id):
     file_id = unquote(file_id)
-    directory = os.path.dirname(file_id)
-    file_name = os.path.basename(file_id)
+
+    if getattr(sys, 'frozen', False):
+        main_directory = sys._MEIPASS
+    else:
+        main_directory = os.path.dirname(os.path.abspath(__file__))
+
+    file_path = os.path.join(main_directory, file_id)
+
+    directory = os.path.dirname(file_path)
+    file_name = os.path.basename(file_path)
     return send_from_directory(directory, file_name)
 
 def start_websocket_server(host, port):
