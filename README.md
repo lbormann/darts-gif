@@ -33,7 +33,7 @@ Tested on Windows 10 & 11 Pro x64, Python 3.9.7
 
 ### Headless-OS: Windows - Linux - MacOS
 
-- Download the executable in the release section. On app-start, make sure you set -WEB to "1" (display images with local webserver)
+- Download the executable in the release section. On app-start, make sure you set -WEB to "1" (display images by webserver)
 
 
 ## Setup Images
@@ -189,6 +189,7 @@ It may be buggy. I've just coded it for fast fun with https://autodarts.io. You 
 
 ## TODOs
 
+- improve README
 - add more sites
 - improve desktop gif-performance
 - care bot (json-events!)
@@ -196,7 +197,7 @@ It may be buggy. I've just coded it for fast fun with https://autodarts.io. You 
 
 ### Done
 
-Add start stuff
+- add start stuff
 
 
 ## LAST WORDS
