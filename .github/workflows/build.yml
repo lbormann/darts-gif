@@ -38,7 +38,7 @@ jobs:
     strategy:
       matrix:
         include:
-          - os: macos-10
+          - os: macos-latest
             TARGET: macos
             CMD_BUILD: pyinstaller -F -n autodarts-gif-mac -i resources/autodarts-gif.icns --add-data "templates:templates" autodarts-gif.py
             OUT_FILE_NAME: autodarts-gif-mac
