@@ -168,7 +168,7 @@ The second argument-definition shows a 'score-area': recognized scores between 0
 
 The third argument-definition shows a 'score-area': recognized scores between 16 and 60 result in display the image "hi" for a custom duration of 3 seconds. If you don't define a duration-key the application defaults to 0 which means unlimited duration til dart-pull appears.
 
-If don't understand have a look at the example file **start.bat**
+If you don't understand have a look at the example file **start.bat**
 
 
 
@@ -224,6 +224,7 @@ It may be buggy. I've just coded it for fast fun with https://autodarts.io. You 
 - improve desktop gif-performance
 - care bot (json-events!)
 - make port(s) configurable
+- Fix initial fullscreen does not work (win)
 
 ### Done
 
