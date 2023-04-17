@@ -40,7 +40,7 @@ main_directory = os.path.dirname(os.path.realpath(__file__))
 
 
 
-VERSION = '1.0.1'
+VERSION = '1.0.2'
 
 BOGEY_NUMBERS = [169, 168, 166, 165, 163, 162, 159]
 SUPPORTED_CRICKET_FIELDS = [15, 16, 17, 18, 19, 20, 25]
@@ -363,6 +363,8 @@ def render_image(event_name, image_list, ptext, duration):
             return True
         return False
 
+    window.attributes('-topmost', True)
+
     if image_path.lower().endswith(".gif"):
         frames = [(frame.copy(), frame.info['duration']) for frame in ImageSequence.Iterator(image)]
         current_frame = 0
@@ -580,6 +582,9 @@ if __name__ == "__main__":
                 flask_app_thread.start()
 
             display_thread.start()
+
+            window.update()
+            root.update()
             root.mainloop()
 
             if WEB > 0:
