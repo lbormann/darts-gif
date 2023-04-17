@@ -3,7 +3,7 @@
 
 Autodarts-gif displays images accordingly to the state of a https://autodarts.io game. A running instance of https://github.com/lbormann/autodarts-caller is needed that sends thrown points from https://autodarts.io to this application.
 
-Tested on Windows 10 & 11 Pro x64, Python 3.9.7
+Tested on Windows 10 & 11 Pro x64, Ubuntu-Desktop 22.04, Python 3.9.7
 
 <img src="https://github.com/lbormann/autodarts-gif/blob/main/showcase/sc.gif?raw=true">
 
@@ -27,12 +27,30 @@ Tested on Windows 10 & 11 Pro x64, Python 3.9.7
 
 ### Desktop-OS: Windows - Linux - MacOS
 
-- If you're running a desktop-driven OS (GUI) it's recommended to use autodarts-desktop: https://github.com/lbormann/autodarts-desktop
+- If you're running a desktop-driven OS it's recommended to use [autodarts-desktop](https://github.com/lbormann/autodarts-desktop) as it takes care of starting, updating, configurating and managing multiple apps.
 
 
-### Headless-OS: Windows - Linux - MacOS
+### Headless-OS:
 
-- Download the executable in the release section. On app-start, make sure you set -WEB to "1" (display images by webserver)
+- Download the appropriate executable in the release section.
+
+
+### By Source: Windows - Linux - MacOS
+
+#### Setup python3
+
+- Download and install python 3.x.x for your specific os.
+- Download and install pip.
+
+
+#### Get the project
+
+    git clone https://github.com/lbormann/autodarts-gif.git
+
+Go to download-directory and type:
+
+    pip install -r requirements.txt
+
 
 
 ## Setup Images
@@ -41,15 +59,17 @@ If you want to display local images you must copy them to media-directory (-MP).
 In case you prefer fetching random images out of the web you neither need to configure a media_path (-MP) nor you need to copy images.
 Of course you can have a mixed configuration.
 
+
+
 ## RUN IT
 
 ### Prerequisite
 
 * You need to have a running caller - https://github.com/lbormann/autodarts-caller - (latest version)
 
+### Run by executable
 
-
-### Run by executable (Windows)
+#### Example: Windows 
 
 Create a shortcut of the executable; right click on the shortcut -> select properties -> add arguments in the target input at the end of the text field.
 
@@ -57,6 +77,15 @@ Example: C:\Downloads\autodarts-gif.exe -A1 "0-14" "bad score"
 
 Save changes.
 Click on the shortcut to start the application.
+
+
+### Run by source
+
+#### Example: Linux
+
+    python3 autodarts-gif.py -A1 "0-14" "bad score"
+
+
 
  
 ### Arguments
