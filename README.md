@@ -3,7 +3,6 @@
 
 Autodarts-gif displays images accordingly to the state of a https://autodarts.io game. A running instance of https://github.com/lbormann/autodarts-caller is needed that sends thrown points from https://autodarts.io to this application.
 
-Tested on Windows 10 & 11 Pro x64, Ubuntu-Desktop 22.04, Python 3.9.7
 
 <img src="https://github.com/lbormann/autodarts-gif/blob/main/showcase/sc.gif?raw=true">
 
@@ -25,7 +24,7 @@ Tested on Windows 10 & 11 Pro x64, Ubuntu-Desktop 22.04, Python 3.9.7
 
 ## INSTALL INSTRUCTION
 
-### Desktop-OS: Windows - Linux - MacOS
+### Desktop-OS:
 
 - If you're running a desktop-driven OS it's recommended to use [autodarts-desktop](https://github.com/lbormann/autodarts-desktop) as it takes care of starting, updating, configurating and managing multiple apps.
 
@@ -35,7 +34,7 @@ Tested on Windows 10 & 11 Pro x64, Ubuntu-Desktop 22.04, Python 3.9.7
 - Download the appropriate executable in the release section.
 
 
-### By Source: Windows - Linux - MacOS
+### By Source:
 
 #### Setup python3
 
