@@ -333,7 +333,11 @@ def hide_image():
         broadcast(mirror_clear)
 
     if WEB == 0 or WEB == 2:
+        window.attributes("-fullscreen", False)
         window.withdraw()
+        window.iconify()
+        root.withdraw()
+        root.iconify()
 
 def render_image(event_name, image_list, ptext, duration):
     global stop_display
@@ -363,6 +367,7 @@ def render_image(event_name, image_list, ptext, duration):
             return True
         return False
 
+    window.attributes("-fullscreen", True)
     window.attributes('-topmost', True)
 
     if image_path.lower().endswith(".gif"):
@@ -478,7 +483,6 @@ def start_flask_app(host, port):
 
 
 
-
 if __name__ == "__main__":
 
     ap = argparse.ArgumentParser()
@@ -559,14 +563,11 @@ if __name__ == "__main__":
 
             root = tk.Tk()
             root.configure(bg='black')
-            root.withdraw()
             root.bind("<KeyPress>", on_key)
 
             window = tk.Toplevel(root)
-            window.attributes("-fullscreen", True)
             window.bind("<KeyPress>", on_key)
             window.configure(background="black")
-            window.withdraw()
 
             label = tk.Label(window, bg='black')
             label.pack()
@@ -582,9 +583,11 @@ if __name__ == "__main__":
                 flask_app_thread.start()
 
             display_thread.start()
-
-            window.update()
-            root.update()
+            
+            
+            window.withdraw()
+            root.withdraw()
+            root.iconify()
             root.mainloop()
 
             if WEB > 0:
