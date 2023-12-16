@@ -1,7 +1,9 @@
 pyinstaller
+Pillow
+beautifulsoup4
 requests
 websocket-client==1.5.1
 websocket-server==0.6.4
-Pillow
 Flask
-beautifulsoup4
+waitress
+rel
