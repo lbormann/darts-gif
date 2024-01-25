@@ -40,7 +40,7 @@ main_directory = os.path.dirname(os.path.realpath(__file__))
 
 
 
-VERSION = '1.0.6'
+VERSION = '1.0.7'
 
 BOGEY_NUMBERS = [169, 168, 166, 165, 163, 162, 159]
 SUPPORTED_CRICKET_FIELDS = [15, 16, 17, 18, 19, 20, 25]
@@ -68,6 +68,31 @@ def ppe(message, error_object):
     ppi(message)
     if DEBUG:
         logger.exception("\r\n" + str(error_object))
+
+
+    args_post_check = None
+    try:
+        if MEDIA_PATH is not None and os.path.commonpath([MEDIA_PATH, main_directory]) == main_directory:
+            args_post_check = 'MEDIA_PATH resides inside MAIN-DIRECTORY! It is not allowed!'
+    except:
+        pass
+
+def check_paths(main_directory, media_path):
+    errors = None
+
+    try:
+        main_directory = os.path.normpath(os.path.dirname(os.path.realpath(main_directory)))
+        media_path = os.path.normpath(media_path)
+
+        if os.path.relpath(media_path, main_directory)[:2] != '..':
+            errors = 'MEDIA_PATH resides inside MAIN-DIRECTORY! It is not allowed!'
+
+    except Exception as e:
+        errors = f'Path validation failed: {e}'
+
+    return errors
+
+
 
 def get_local_ip_address():
     try:
@@ -528,12 +553,7 @@ if __name__ == "__main__":
         SCORE_AREA_IMAGES[a] = parsed_score_area
         # ppi(parsed_score_area)
 
-    args_post_check = None
-    try:
-        if MEDIA_PATH is not None and os.path.commonpath([MEDIA_PATH, main_directory]) == main_directory:
-            args_post_check = 'MEDIA_PATH resides inside MAIN-DIRECTORY! It is not allowed!'
-    except:
-        pass
+
     
     global stop_display
     stop_display = False 
@@ -558,48 +578,51 @@ if __name__ == "__main__":
     ppi('DONATION: bitcoin:bc1q8dcva098rrrq2uqhv38rj5hayzrqywhudvrmxa', None, '')
     ppi('\r\n', None, '')
 
-    if args_post_check == None: 
-        try:
-            connect_data_feeder()
+    path_status = check_paths(__file__, MEDIA_PATH)
+    if path_status is not None: 
+        ppi('Please check your arguments: ' + path_status)
+        sys.exit()  
 
-            root = tk.Tk()
-            root.configure(bg='black')
-            root.bind("<KeyPress>", on_key)
+    try:
+        connect_data_feeder()
 
-            window = tk.Toplevel(root)
-            window.bind("<KeyPress>", on_key)
-            window.configure(background="black")
+        root = tk.Tk()
+        root.configure(bg='black')
+        root.bind("<KeyPress>", on_key)
 
-            label = tk.Label(window, bg='black')
-            label.pack()
+        window = tk.Toplevel(root)
+        window.bind("<KeyPress>", on_key)
+        window.configure(background="black")
 
-            image_queue = Queue()
-            display_thread = threading.Thread(target=display_images, args=(image_queue,))
+        label = tk.Label(window, bg='black')
+        label.pack()
 
-            if WEB > 0:
-                WEB_HOST = get_local_ip_address()   
-                websocket_server_thread = threading.Thread(target=start_websocket_server, args=(WEB_HOST, 8039))
-                websocket_server_thread.start()
-                flask_app_thread = threading.Thread(target=start_flask_app, args=(WEB_HOST, '5001'))
-                flask_app_thread.start()
+        image_queue = Queue()
+        display_thread = threading.Thread(target=display_images, args=(image_queue,))
 
-            display_thread.start()
-            
-            
-            window.withdraw()
-            root.withdraw()
-            root.iconify()
-            root.mainloop()
+        if WEB > 0:
+            WEB_HOST = get_local_ip_address()   
+            websocket_server_thread = threading.Thread(target=start_websocket_server, args=(WEB_HOST, 8039))
+            websocket_server_thread.start()
+            flask_app_thread = threading.Thread(target=start_flask_app, args=(WEB_HOST, '5001'))
+            flask_app_thread.start()
 
-            if WEB > 0:
-                websocket_server_thread.join()
-                flask_app_thread.join() 
+        display_thread.start()
+        
+        
+        window.withdraw()
+        root.withdraw()
+        root.iconify()
+        root.mainloop()
+
+        if WEB > 0:
+            websocket_server_thread.join()
+            flask_app_thread.join() 
 
 
-        except Exception as e:
-            ppe("Connect failed: ", e)
-    else:
-        ppi('Please check your arguments: ' + args_post_check)
+    except Exception as e:
+        ppe("Connect failed: ", e)
+
 
 
 time.sleep(30)
