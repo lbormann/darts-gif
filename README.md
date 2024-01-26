@@ -210,24 +210,6 @@ If you don't understand have a look at the example file **start.bat**
 This application requires a running instance of autodarts-caller https://github.com/lbormann/autodarts-caller
 
 
-## BUGS
-
-It may be buggy. I've just coded it for fast fun with https://autodarts.io. You can give me feedback in Discord > wusaaa
-
-
-## TODOs
-
-- improve README
-- add more sites
-- improve desktop gif-performance
-- care bot (json-events!)
-- make port(s) configurable
-- Fix initial fullscreen does not work (win)
-
-### Done
-
-- add start stuff
-
 
 ## Resources
 
