@@ -1,4 +1,4 @@
-## 1.0.7
+## 1.0.6
 
 - add CHANGELOG
 - add BACKLOG
