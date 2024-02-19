@@ -1,3 +1,4 @@
+- fix arm64-build: missing tkinter
 - improve local gif performance
 - add more sites
 - fix multiple window

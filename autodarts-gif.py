@@ -42,6 +42,9 @@ main_directory = os.path.dirname(os.path.realpath(__file__))
 
 VERSION = '1.0.7'
 
+DEFAULT_HOST_IP = '0.0.0.0'
+DEFAULT_WEB_PORT = '5001'
+
 BOGEY_NUMBERS = [169, 168, 166, 165, 163, 162, 159]
 SUPPORTED_CRICKET_FIELDS = [15, 16, 17, 18, 19, 20, 25]
 SUPPORTED_GAME_VARIANTS = ['X01', 'Cricket', 'Random Checkout']
@@ -93,13 +96,14 @@ def check_paths(main_directory, media_path):
     return errors
 
 
-
-def get_local_ip_address():
+def get_local_ip_address(target='8.8.8.8'):
     try:
-        hostname = socket.gethostname()
-        ip_address = socket.gethostbyname(hostname)
+        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        s.connect((target, 80))
+        ip_address = s.getsockname()[0]
+        s.close()
     except:
-        ip_address = '0.0.0.0'
+        ip_address = DEFAULT_HOST_IP
     return ip_address
 
 
@@ -602,9 +606,9 @@ if __name__ == "__main__":
 
         if WEB > 0:
             WEB_HOST = get_local_ip_address()   
-            websocket_server_thread = threading.Thread(target=start_websocket_server, args=(WEB_HOST, 8039))
+            websocket_server_thread = threading.Thread(target=start_websocket_server, args=(DEFAULT_HOST_IP, 8039))
             websocket_server_thread.start()
-            flask_app_thread = threading.Thread(target=start_flask_app, args=(WEB_HOST, '5001'))
+            flask_app_thread = threading.Thread(target=start_flask_app, args=(DEFAULT_HOST_IP, DEFAULT_WEB_PORT))
             flask_app_thread.start()
 
         display_thread.start()
