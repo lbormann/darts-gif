@@ -100,6 +100,8 @@ Click on the shortcut to start the application.
 - -S{0-180} / --score_{0-180}_images [OPTIONAL] [MULTIPLE ENTRIES POSSIBLE] [Default: None] [Possible values: See below] 
 - -A{1-12} / --score_area_{1-12}_images [OPTIONAL] [MULTIPLE ENTRIES POSSIBLE] [Default: None] [Possible values: See below] 
 - -WEB / --web_gif [OPTIONAL] [Default: 0] [Possible values: 0|1|2] 
+- -WEBP / --web_caller_port [Default: 5001]
+- -DEB / --debug [Default: 0] [Possible values: 0 | 1]
 
 
 *`-CON / --connection`*
@@ -147,6 +149,16 @@ Define one image or a list of images. If you define a list, the program will ran
 *`-WEB / --web_gif`*
 
 If you set this to a '1' or '2' the app will host a web-endpoint to transfer every display-action to connected devices. A value '1' will display images only on connected devices. Value '2' will display images locally and on connected devices.
+
+*`-WEBP / --web_gif_port`*
+
+If web-gif is enabled, you can configure a custom port. By default this is '5001'.
+
+*`-DEB / --debug`*
+
+Set this to value '1', to output extended event-information on console. By default this is '0'.
+
+
 
 _ _ _ _ _ _ _ _ _ _
 

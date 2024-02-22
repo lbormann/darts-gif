@@ -1,4 +1,4 @@
-pyinstaller
+pyinstaller==6.4.0
 Pillow
 beautifulsoup4
 requests

@@ -46,7 +46,7 @@
         });
 
         function setupWebSocketConnection() {
-            socket = new WebSocket("ws://{{ host }}:8039");
+            socket = new WebSocket("ws://" + window.location.hostname + ":8039");
             socket.onopen = function() {
                 console.log("Socket: connected!");
                 state.innerText = "CONNECTED!";

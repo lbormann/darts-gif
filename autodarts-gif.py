@@ -40,7 +40,7 @@ main_directory = os.path.dirname(os.path.realpath(__file__))
 
 
 
-VERSION = '1.0.7'
+VERSION = '1.0.8'
 
 DEFAULT_HOST_IP = '0.0.0.0'
 DEFAULT_WEB_PORT = '5001'
@@ -95,16 +95,6 @@ def check_paths(main_directory, media_path):
 
     return errors
 
-
-def get_local_ip_address(target='8.8.8.8'):
-    try:
-        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        s.connect((target, 80))
-        ip_address = s.getsockname()[0]
-        s.close()
-    except:
-        ip_address = DEFAULT_HOST_IP
-    return ip_address
 
 
 def create_image_path(filename):
@@ -486,17 +476,16 @@ def schedule_image(image_queue, event_name, image_list, ptext, duration=0):
 
 @app.route('/')
 def index():
-    return render_template('index.html', host=WEB_HOST)
+    return render_template('index.html', host=DEFAULT_HOST_IP)
 
 @app.route('/images/<path:file_id>', methods=['GET'])
 def file(file_id):
     file_id = unquote(file_id)
-    if getattr(sys, 'frozen', False):
-        main_directory = os.path.dirname(sys.executable)
-    else:
-        main_directory = os.path.dirname(os.path.abspath(__file__))
-    file_path = os.path.join(main_directory, file_id)
-    directory = os.path.dirname(file_path)
+    file_path = file_id
+    if os.name == 'posix':  # Unix/Linux/MacOS
+        directory = '/' + os.path.dirname(file_path)
+    else:  # Windows
+        directory = os.path.dirname(file_path)
     file_name = os.path.basename(file_path)
     return send_from_directory(directory, file_name)
 
@@ -529,6 +518,7 @@ if __name__ == "__main__":
         area = str(a)
         ap.add_argument("-A" + area, "--score_area_" + area + "_images", default=None, required=False, nargs='*', help="WLED image-definition for score-area")
     ap.add_argument("-WEB", "--web_gif", required=False, type=int, choices=range(0, 3), default=0, help="If '1' the application will host an web-endpoint, '2' it will do '1' and core display-functionality.")
+    ap.add_argument("-WEBP", "--web_gif_port", required=False, type=int, default=DEFAULT_WEB_PORT, help="Web-Port")
     ap.add_argument("-DEB", "--debug", type=int, choices=range(0, 2), default=False, required=False, help="If '1', the application will output additional information")
 
     args = vars(ap.parse_args())
@@ -539,6 +529,7 @@ if __name__ == "__main__":
     CON = args['connection']
     HIGH_FINISH_ON = args['high_finish_on']
     WEB = args['web_gif']
+    WEB_PORT = args['web_gif_port']
     DEBUG = args['debug']
 
     GAME_WON_IMAGES = parse_images_argument(args['game_won_images'])
@@ -605,10 +596,9 @@ if __name__ == "__main__":
         display_thread = threading.Thread(target=display_images, args=(image_queue,))
 
         if WEB > 0:
-            WEB_HOST = get_local_ip_address()   
             websocket_server_thread = threading.Thread(target=start_websocket_server, args=(DEFAULT_HOST_IP, 8039))
             websocket_server_thread.start()
-            flask_app_thread = threading.Thread(target=start_flask_app, args=(DEFAULT_HOST_IP, DEFAULT_WEB_PORT))
+            flask_app_thread = threading.Thread(target=start_flask_app, args=(DEFAULT_HOST_IP, WEB_PORT))
             flask_app_thread.start()
 
         display_thread.start()

@@ -19,4 +19,5 @@ python "autodarts-gif.py" ^
 -A1 "1-60" "darts good" ^
 -A2 "61-100" "darts perfect" ^
 -A3 "101-180" "god" "master" ^
--WEB "0"
+-WEB "0" ^
+-WEBP "5001"
