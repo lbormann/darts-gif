@@ -62,7 +62,7 @@ jobs:
               sudo apt-get update
               sudo apt-get install -y qemu-user-static binfmt-support
               docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
-              docker run --rm -v /usr/bin/qemu-arm-static:/usr/bin/qemu-arm-static --platform linux/arm64/v8 -v $(pwd):/workdir -w /workdir arm64v8/ubuntu:20.04 bash -c "apt-get update -y && apt-get install -y python3-pip python3-tk && pip install -r requirements.txt && pyinstaller -F -n autodarts-gif-arm64 --hidden-import=PIL._tkinter_finder -i resources/autodarts-gif.svg --add-data 'templates:templates' autodarts-gif.py"
+              docker run --rm -v /usr/bin/qemu-arm-static:/usr/bin/qemu-arm-static --platform linux/arm64/v8 -v $(pwd):/workdir -w /workdir arm64v8/ubuntu:20.04 bash -c "apt-get update -y && apt-get install -y python3-pip && pip install -r requirements.txt && pyinstaller -F -n autodarts-gif-arm64 --hidden-import=PIL._tkinter_finder -i resources/autodarts-gif.svg --add-data "templates:templates" autodarts-gif.py"
             OUT_FILE_NAME: autodarts-gif-arm64
             ASSET_MIME: application/octet-stream
 

@@ -1,3 +1,9 @@
+## 1.0.9
+
+- stop display by mouse-click and touch
+- stop display for bot turns
+
+
 ## 1.0.8
 
 - fix web-images-path for linux, macos

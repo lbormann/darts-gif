@@ -40,7 +40,7 @@ main_directory = os.path.dirname(os.path.realpath(__file__))
 
 
 
-VERSION = '1.0.8'
+VERSION = '1.0.9'
 
 DEFAULT_HOST_IP = '0.0.0.0'
 DEFAULT_WEB_PORT = '5001'
@@ -142,6 +142,10 @@ def parse_score_area_images_argument(score_area_images_arguments):
 
 def process_variant_x01(msg):
     if msg['event'] == 'darts-thrown':
+        if msg['playerIsBot'] == 'True':
+            ppi("Player is bot - skip")
+            return
+
         val = str(msg['game']['dartValue'])
         if SCORE_IMAGES[val] != None:
             schedule_image(image_queue, val, SCORE_IMAGES[val], 'Darts-thrown: ' + val)
@@ -163,6 +167,9 @@ def process_variant_x01(msg):
         schedule_image_close()
 
     elif msg['event'] == 'busted' and BUSTED_IMAGES != None:
+        if msg['playerIsBot'] == 'True':
+            ppi("Player is bot - skip")
+            return
         schedule_image(image_queue, 'busted', BUSTED_IMAGES, 'Busted!')
 
     elif msg['event'] == 'game-won' and GAME_WON_IMAGES != None:
@@ -211,7 +218,7 @@ def on_message_data_feeder(ws, message):
             # ppi(message)
             msg = ast.literal_eval(message)
 
-            if('game' in msg):
+            if('custom' in msg and msg['custom'] == 'True' and 'game' in msg):
                 mode = msg['game']['mode']
                 if mode == 'X01' or mode == 'Cricket' or mode == 'Random Checkout':
                     process_variant_x01(msg)
@@ -354,9 +361,9 @@ def hide_image():
     if WEB == 0 or WEB == 2:
         window.attributes("-fullscreen", False)
         window.withdraw()
-        window.iconify()
+        # window.iconify()
         root.withdraw()
-        root.iconify()
+        # root.iconify()
 
 def render_image(event_name, image_list, ptext, duration):
     global stop_display
@@ -584,9 +591,11 @@ if __name__ == "__main__":
         root = tk.Tk()
         root.configure(bg='black')
         root.bind("<KeyPress>", on_key)
+        root.bind("<Button-1>", on_key) 
 
         window = tk.Toplevel(root)
         window.bind("<KeyPress>", on_key)
+        window.bind("<Button-1>", on_key) 
         window.configure(background="black")
 
         label = tk.Label(window, bg='black')
