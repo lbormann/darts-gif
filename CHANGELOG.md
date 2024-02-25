@@ -1,3 +1,8 @@
+## 1.0.11
+
+- hotfix messages
+
+
 ## 1.0.10
 
 - improve random image file (no repetitions)

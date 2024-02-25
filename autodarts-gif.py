@@ -40,7 +40,7 @@ main_directory = os.path.dirname(os.path.realpath(__file__))
 
 
 
-VERSION = '1.0.10'
+VERSION = '1.0.11'
 
 DEFAULT_HOST_IP = '0.0.0.0'
 DEFAULT_WEB_PORT = '5001'
@@ -218,7 +218,7 @@ def on_message_data_feeder(ws, message):
             # ppi(message)
             msg = ast.literal_eval(message)
 
-            if('custom' in msg and msg['custom'] == 'True' and 'game' in msg):
+            if('game' in msg and 'mode' in msg['game']):
                 mode = msg['game']['mode']
                 if mode == 'X01' or mode == 'Cricket' or mode == 'Random Checkout':
                     process_variant_x01(msg)
