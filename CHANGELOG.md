@@ -1,3 +1,9 @@
+## 1.0.10
+
+- improve random image file (no repetitions)
+- fix arm64-build: missing tkinter
+
+
 ## 1.0.9
 
 - stop display by mouse-click and touch

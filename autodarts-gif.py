@@ -40,7 +40,7 @@ main_directory = os.path.dirname(os.path.realpath(__file__))
 
 
 
-VERSION = '1.0.9'
+VERSION = '1.0.10'
 
 DEFAULT_HOST_IP = '0.0.0.0'
 DEFAULT_WEB_PORT = '5001'
@@ -258,7 +258,17 @@ def broadcast(data):
     t.join()
    
 
-
+def get_random_file(list):
+    global last_image
+    if len(list) > 1:
+        while 1:
+            rand = random.choice(list)
+            if rand != last_image:
+                last_image = rand
+                break
+    else:
+        last_image = random.choice(list)    
+    return last_image
 
 def sanitize_tag(tag):
     tag = tag.replace(' ', '-')
@@ -318,7 +328,7 @@ def get_random_image_url(tag):
     return image_url
 
 def get_state(event, images_list):
-    choice = random.choice(images_list)
+    choice = get_random_file(images_list)
 
     tag = 'darts'
     if isinstance(choice, tuple) and choice[0]['file'].endswith(tuple(SUPPORTED_IMAGE_FORMATS)) == False:
@@ -559,6 +569,9 @@ if __name__ == "__main__":
     
     global stop_display
     stop_display = False 
+
+    global last_image
+    last_image = None
    
     global WS_DATA_FEEDER
     WS_DATA_FEEDER = None
