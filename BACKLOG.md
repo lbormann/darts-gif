@@ -1,4 +1,3 @@
-- improve local gif performance
 - add more sites
 - fix multiple window
 - add license

@@ -1,3 +1,9 @@
+## 1.0.12
+
+- close gif-playback when stop triggered outside local
+- improve local gif performance
+
+
 ## 1.0.11
 
 - hotfix messages

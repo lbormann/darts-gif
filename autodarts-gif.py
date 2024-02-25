@@ -40,7 +40,7 @@ main_directory = os.path.dirname(os.path.realpath(__file__))
 
 
 
-VERSION = '1.0.11'
+VERSION = '1.0.12'
 
 DEFAULT_HOST_IP = '0.0.0.0'
 DEFAULT_WEB_PORT = '5001'
@@ -141,11 +141,15 @@ def parse_score_area_images_argument(score_area_images_arguments):
 
 
 def process_variant_x01(msg):
+    global stop_display
+    stop_display = True
+    hide_image()
+
     if msg['event'] == 'darts-thrown':
         if msg['playerIsBot'] == 'True':
             ppi("Player is bot - skip")
             return
-
+    
         val = str(msg['game']['dartValue'])
         if SCORE_IMAGES[val] != None:
             schedule_image(image_queue, val, SCORE_IMAGES[val], 'Darts-thrown: ' + val)
@@ -349,17 +353,20 @@ def on_key(event):
     stop_display = True
 
 def show_image(image):
-    screen_width = root.winfo_screenwidth()
-    screen_height = root.winfo_screenheight()
-    image_width, image_height = image.size
-    scale = min(screen_width / image_width, screen_height / image_height)
-    new_width = int(image_width * scale)
-    new_height = int(image_height * scale)
-    resized_image = image.resize((new_width, new_height), Resampling.LANCZOS)
-    photo = ImageTk.PhotoImage(resized_image)
-    label.config(image=photo)
-    label.image = photo
-    window.deiconify()
+    try:
+        screen_width = root.winfo_screenwidth()
+        screen_height = root.winfo_screenheight()
+        image_width, image_height = image.size
+        scale = min(screen_width / image_width, screen_height / image_height)
+        new_width = int(image_width * scale)
+        new_height = int(image_height * scale)
+        resized_image = image.resize((new_width, new_height), Resampling.LANCZOS)
+        photo = ImageTk.PhotoImage(resized_image)
+        label.config(image=photo)
+        label.image = photo
+        window.deiconify()
+    except Exception as e:
+        pass
 
 def hide_image():
     if WEB > 0:
@@ -371,9 +378,9 @@ def hide_image():
     if WEB == 0 or WEB == 2:
         window.attributes("-fullscreen", False)
         window.withdraw()
-        # window.iconify()
+        window.iconify()
         root.withdraw()
-        # root.iconify()
+        root.iconify()
 
 def render_image(event_name, image_list, ptext, duration):
     global stop_display
@@ -431,7 +438,7 @@ def render_image(event_name, image_list, ptext, duration):
                     hide_image()
                     return
             
-            root.after(1, animate_gif)
+            root.after(25, animate_gif)
         
         def simulate_gif():            
             if duration > 0:
