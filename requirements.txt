@@ -4,6 +4,6 @@ beautifulsoup4==4.12.3
 requests==2.31.0
 websocket-client==1.5.1
 websocket-server==0.6.4
-Flask==2.1.0
+Flask
 waitress==2.1.2
 rel==0.4.9.5
