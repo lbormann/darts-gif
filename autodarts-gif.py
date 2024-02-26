@@ -40,7 +40,7 @@ main_directory = os.path.dirname(os.path.realpath(__file__))
 
 
 
-VERSION = '1.0.12'
+VERSION = '1.0.13'
 
 DEFAULT_HOST_IP = '0.0.0.0'
 DEFAULT_WEB_PORT = '5001'
@@ -73,16 +73,8 @@ def ppe(message, error_object):
         logger.exception("\r\n" + str(error_object))
 
 
-    args_post_check = None
-    try:
-        if MEDIA_PATH is not None and os.path.commonpath([MEDIA_PATH, main_directory]) == main_directory:
-            args_post_check = 'MEDIA_PATH resides inside MAIN-DIRECTORY! It is not allowed!'
-    except:
-        pass
-
 def check_paths(main_directory, media_path):
     errors = None
-
     try:
         main_directory = os.path.normpath(os.path.dirname(os.path.realpath(main_directory)))
         media_path = os.path.normpath(media_path)
@@ -378,9 +370,12 @@ def hide_image():
     if WEB == 0 or WEB == 2:
         window.attributes("-fullscreen", False)
         window.withdraw()
-        window.iconify()
+        if os.name == 'posix':  # Unix/Linux/MacOS
+            window.iconify()
         root.withdraw()
-        root.iconify()
+        if os.name == 'posix':  # Unix/Linux/MacOS
+            root.iconify()
+
 
 def render_image(event_name, image_list, ptext, duration):
     global stop_display
@@ -419,42 +414,27 @@ def render_image(event_name, image_list, ptext, duration):
         st = time.time()
         frame_start_time = st
         start_time = st
+        frame_duration = frames[current_frame][1] / 1000  # Zeit in Sekunden
+        next_frame_time = frame_start_time + frame_duration
 
-        def animate_gif():
-            nonlocal start_time, frame_start_time, current_frame
+        while True:
             if stop_check():
-                return
-            frame, frame_duration = frames[current_frame]
+                break
 
-            elapsed_time = time.time() - frame_start_time
-            if elapsed_time >= frame_duration / 1000:
-                show_image(frame)
+            now = time.time()
+            if now >= next_frame_time:
+                show_image(frames[current_frame][0])
                 current_frame = (current_frame + 1) % len(frames)
-                frame_start_time = time.time()
+                frame_duration = frames[current_frame][1] / 1000
+                frame_start_time = now
+                next_frame_time = frame_start_time + frame_duration
 
-            if duration > 0:
-                dur_time = time.time() - start_time
-                if dur_time >= duration:
-                    hide_image()
-                    return
-            
-            root.after(25, animate_gif)
-        
-        def simulate_gif():            
-            if duration > 0:
-                start_time = time.time()
-                while (time.time() - start_time) < duration:
-                   pass 
+            if duration > 0 and now - start_time >= duration:
                 hide_image()
-                return
-            
+                break
 
-        if WEB == 0 or WEB == 2:
-            animate_gif()
-
-        elif WEB == 1:
-            simulate_gif()
-
+            # Kleine Pause, um die CPU nicht zu stark zu belasten
+            time.sleep(0.001)
 
     else:
         if WEB == 0 or WEB == 2:
@@ -467,6 +447,91 @@ def render_image(event_name, image_list, ptext, duration):
                     break
                 time.sleep(0.1)
             hide_image()
+
+# def render_image(event_name, image_list, ptext, duration):
+#     global stop_display
+
+#     (state, duration) = get_state(event_name, image_list)
+#     ppi(ptext + ' - IMAGE: ' + str(state))
+#     image_path = state["file"]
+
+#     if os.path.exists(image_path) == False:
+#         ppi(f"Image not found: {image_path}")
+#         return
+    
+#     if WEB > 0:
+#         mirror = {
+#                 "event": "mirror",
+#                 "file": quote(image_path, safe="")
+#             }
+#         broadcast(mirror)
+
+#     image = Image.open(image_path)
+
+#     def stop_check():
+#         global stop_display
+#         if stop_display:
+#             hide_image()
+#             stop_display = False
+#             return True
+#         return False
+
+#     window.attributes("-fullscreen", True)
+#     window.attributes('-topmost', True)
+
+#     if image_path.lower().endswith(".gif"):
+#         frames = [(frame.copy(), frame.info['duration']) for frame in ImageSequence.Iterator(image)]
+#         current_frame = 0
+#         st = time.time()
+#         frame_start_time = st
+#         start_time = st
+
+#         def animate_gif():
+#             nonlocal start_time, frame_start_time, current_frame
+#             if stop_check():
+#                 return
+#             frame, frame_duration = frames[current_frame]
+
+#             elapsed_time = time.time() - frame_start_time
+#             if elapsed_time >= frame_duration / 1000:
+#                 show_image(frame)
+#                 current_frame = (current_frame + 1) % len(frames)
+#                 frame_start_time = time.time()
+
+#             if duration > 0:
+#                 dur_time = time.time() - start_time
+#                 if dur_time >= duration:
+#                     hide_image()
+#                     return
+            
+#             root.after(25, animate_gif)
+        
+#         def simulate_gif():            
+#             if duration > 0:
+#                 start_time = time.time()
+#                 while (time.time() - start_time) < duration:
+#                    pass 
+#                 hide_image()
+#                 return
+            
+
+#         if WEB == 0 or WEB == 2:
+#             animate_gif()
+
+#         elif WEB == 1:
+#             simulate_gif()
+
+#     else:
+#         if WEB == 0 or WEB == 2:
+#             show_image(image)
+
+#         if duration > 0:
+#             start_time = time.time()
+#             while (time.time() - start_time) < duration:
+#                 if stop_check():
+#                     break
+#                 time.sleep(0.1)
+#             hide_image()
 
 def display_images(image_queue):
     global stop_display
