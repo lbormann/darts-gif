@@ -371,6 +371,16 @@ def hide_image():
 
 
 def render_image(event_name, image_list, ptext, duration):
+    def stop_check():
+        global stop_display
+        if stop_display:
+            label.image=""
+            hide_image()
+            stop_display = False
+            return True
+        return False
+    
+    
     global stop_display
 
     (state, duration) = get_state(event_name, image_list)
@@ -388,21 +398,15 @@ def render_image(event_name, image_list, ptext, duration):
             }
         broadcast(mirror)
 
+    
+    
     image = Image.open(image_path)
 
-    def stop_check():
-        global stop_display
-        if stop_display:
-            label.image=""
-            hide_image()
-            stop_display = False
-            return True
-        return False
-
-    label.image=""
-    root.deiconify()
-    root.attributes("-fullscreen", True)
-    root.attributes('-topmost', True)
+    if WEB == 0 or WEB == 2:
+        label.image=""
+        root.deiconify()
+        root.attributes("-fullscreen", True)
+        root.attributes('-topmost', True)
 
     if image_path.lower().endswith(".gif"):
         frames = [(frame.copy(), frame.info['duration']) for frame in ImageSequence.Iterator(image)]
@@ -419,7 +423,8 @@ def render_image(event_name, image_list, ptext, duration):
 
             now = time.time()
             if now >= next_frame_time:
-                show_image(frames[current_frame][0])
+                if WEB == 0 or WEB == 2:
+                    show_image(frames[current_frame][0])
                 current_frame = (current_frame + 1) % len(frames)
                 frame_duration = frames[current_frame][1] / 1000
                 frame_start_time = now
