@@ -1,3 +1,8 @@
+## 1.0.14
+
+- withdraw tkinter window
+
+
 ## 1.0.13
 
 - hide tkinter window for linux

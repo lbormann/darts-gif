@@ -40,7 +40,7 @@ main_directory = os.path.dirname(os.path.realpath(__file__))
 
 
 
-VERSION = '1.0.13'
+VERSION = '1.0.14'
 
 DEFAULT_HOST_IP = '0.0.0.0'
 DEFAULT_WEB_PORT = '5001'
@@ -356,7 +356,6 @@ def show_image(image):
         photo = ImageTk.PhotoImage(resized_image)
         label.config(image=photo)
         label.image = photo
-        window.deiconify()
     except Exception as e:
         pass
 
@@ -368,13 +367,7 @@ def hide_image():
         broadcast(mirror_clear)
 
     if WEB == 0 or WEB == 2:
-        window.attributes("-fullscreen", False)
-        window.withdraw()
-        if os.name == 'posix':  # Unix/Linux/MacOS
-            window.iconify()
         root.withdraw()
-        if os.name == 'posix':  # Unix/Linux/MacOS
-            root.iconify()
 
 
 def render_image(event_name, image_list, ptext, duration):
@@ -400,13 +393,16 @@ def render_image(event_name, image_list, ptext, duration):
     def stop_check():
         global stop_display
         if stop_display:
+            label.image=""
             hide_image()
             stop_display = False
             return True
         return False
 
-    window.attributes("-fullscreen", True)
-    window.attributes('-topmost', True)
+    label.image=""
+    root.deiconify()
+    root.attributes("-fullscreen", True)
+    root.attributes('-topmost', True)
 
     if image_path.lower().endswith(".gif"):
         frames = [(frame.copy(), frame.info['duration']) for frame in ImageSequence.Iterator(image)]
@@ -414,7 +410,7 @@ def render_image(event_name, image_list, ptext, duration):
         st = time.time()
         frame_start_time = st
         start_time = st
-        frame_duration = frames[current_frame][1] / 1000  # Zeit in Sekunden
+        frame_duration = frames[current_frame][1] / 1000
         next_frame_time = frame_start_time + frame_duration
 
         while True:
@@ -433,7 +429,6 @@ def render_image(event_name, image_list, ptext, duration):
                 hide_image()
                 break
 
-            # Kleine Pause, um die CPU nicht zu stark zu belasten
             time.sleep(0.001)
 
     else:
@@ -448,90 +443,6 @@ def render_image(event_name, image_list, ptext, duration):
                 time.sleep(0.1)
             hide_image()
 
-# def render_image(event_name, image_list, ptext, duration):
-#     global stop_display
-
-#     (state, duration) = get_state(event_name, image_list)
-#     ppi(ptext + ' - IMAGE: ' + str(state))
-#     image_path = state["file"]
-
-#     if os.path.exists(image_path) == False:
-#         ppi(f"Image not found: {image_path}")
-#         return
-    
-#     if WEB > 0:
-#         mirror = {
-#                 "event": "mirror",
-#                 "file": quote(image_path, safe="")
-#             }
-#         broadcast(mirror)
-
-#     image = Image.open(image_path)
-
-#     def stop_check():
-#         global stop_display
-#         if stop_display:
-#             hide_image()
-#             stop_display = False
-#             return True
-#         return False
-
-#     window.attributes("-fullscreen", True)
-#     window.attributes('-topmost', True)
-
-#     if image_path.lower().endswith(".gif"):
-#         frames = [(frame.copy(), frame.info['duration']) for frame in ImageSequence.Iterator(image)]
-#         current_frame = 0
-#         st = time.time()
-#         frame_start_time = st
-#         start_time = st
-
-#         def animate_gif():
-#             nonlocal start_time, frame_start_time, current_frame
-#             if stop_check():
-#                 return
-#             frame, frame_duration = frames[current_frame]
-
-#             elapsed_time = time.time() - frame_start_time
-#             if elapsed_time >= frame_duration / 1000:
-#                 show_image(frame)
-#                 current_frame = (current_frame + 1) % len(frames)
-#                 frame_start_time = time.time()
-
-#             if duration > 0:
-#                 dur_time = time.time() - start_time
-#                 if dur_time >= duration:
-#                     hide_image()
-#                     return
-            
-#             root.after(25, animate_gif)
-        
-#         def simulate_gif():            
-#             if duration > 0:
-#                 start_time = time.time()
-#                 while (time.time() - start_time) < duration:
-#                    pass 
-#                 hide_image()
-#                 return
-            
-
-#         if WEB == 0 or WEB == 2:
-#             animate_gif()
-
-#         elif WEB == 1:
-#             simulate_gif()
-
-#     else:
-#         if WEB == 0 or WEB == 2:
-#             show_image(image)
-
-#         if duration > 0:
-#             start_time = time.time()
-#             while (time.time() - start_time) < duration:
-#                 if stop_check():
-#                     break
-#                 time.sleep(0.1)
-#             hide_image()
 
 def display_images(image_queue):
     global stop_display
@@ -677,13 +588,8 @@ if __name__ == "__main__":
         root.configure(bg='black')
         root.bind("<KeyPress>", on_key)
         root.bind("<Button-1>", on_key) 
-
-        window = tk.Toplevel(root)
-        window.bind("<KeyPress>", on_key)
-        window.bind("<Button-1>", on_key) 
-        window.configure(background="black")
-
-        label = tk.Label(window, bg='black')
+        
+        label = tk.Label(root, bg='black')
         label.pack()
 
         image_queue = Queue()
@@ -697,10 +603,7 @@ if __name__ == "__main__":
 
         display_thread.start()
         
-        
-        window.withdraw()
         root.withdraw()
-        root.iconify()
         root.mainloop()
 
         if WEB > 0:
