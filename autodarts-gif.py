@@ -256,15 +256,23 @@ def broadcast(data):
 
 def get_random_file(list):
     global last_image
+    randImageFound = None
     if len(list) > 1:
-        while 1:
-            rand = random.choice(list)
-            if rand != last_image:
-                last_image = rand
+        # more than 1 image in the list
+        i = 0
+        while i<30:
+            # try x times to find an image which is not yet shown
+            randImageFound = random.choice(list)
+            i+=1
+            if last_image.count(randImageFound) == 0:
+                # image not yet shown - add to last_image list
+                last_image.append(randImageFound)
                 break
     else:
-        last_image = random.choice(list)    
-    return last_image
+        # one image in the list
+        randImageFound = random.choice(list)
+        last_image.append(randImageFound)
+    return randImageFound
 
 def sanitize_tag(tag):
     tag = tag.replace(' ', '-')
@@ -558,8 +566,8 @@ if __name__ == "__main__":
     global stop_display
     stop_display = False 
 
-    global last_image
-    last_image = None
+    last_image = []
+    # last_image = None
    
     global WS_DATA_FEEDER
     WS_DATA_FEEDER = None
