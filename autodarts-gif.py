@@ -261,17 +261,20 @@ def get_random_file(list):
         # more than 1 image in the list
         i = 0
         while i<30:
+            ppi(f"Fetching random image from '{list}' for '{i}'th time")
             # try x times to find an image which is not yet shown
             randImageFound = random.choice(list)
             i+=1
             if last_image.count(randImageFound) == 0:
                 # image not yet shown - add to last_image list
                 last_image.append(randImageFound)
+                ppi(f"Found new random image '{randImageFound}'")
                 break
     else:
         # one image in the list
         randImageFound = random.choice(list)
         last_image.append(randImageFound)
+    ppi(f"Found image '{randImageFound}'")
     return randImageFound
 
 def sanitize_tag(tag):
