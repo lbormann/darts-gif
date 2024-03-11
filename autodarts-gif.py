@@ -7,6 +7,7 @@ import argparse
 from urllib.parse import quote, unquote
 import requests
 import websocket
+import ssl
 import socket
 from websocket_server import WebsocketServer
 import threading
@@ -40,7 +41,7 @@ main_directory = os.path.dirname(os.path.realpath(__file__))
 
 
 
-VERSION = '1.0.14'
+VERSION = '1.0.15'
 
 DEFAULT_HOST_IP = '0.0.0.0'
 DEFAULT_WEB_PORT = '5001'
@@ -194,15 +195,15 @@ def connect_data_feeder():
         global WS_DATA_FEEDER
         websocket.enableTrace(False)
         data_feeder_host = CON
-        if CON.startswith('ws://') == False:
-            data_feeder_host = 'ws://' + CON
+        if CON.startswith('wss://') == False:
+            data_feeder_host = 'wss://' + CON
         WS_DATA_FEEDER = websocket.WebSocketApp(data_feeder_host,
                                 on_open = on_open_data_feeder,
                                 on_message = on_message_data_feeder,
                                 on_error = on_error_data_feeder,
                                 on_close = on_close_data_feeder)
 
-        WS_DATA_FEEDER.run_forever()
+        WS_DATA_FEEDER.run_forever(sslopt={"cert_reqs": ssl.CERT_NONE})
     threading.Thread(target=process).start()
 
 def on_open_data_feeder(ws):

@@ -1,3 +1,9 @@
+## 1.0.15
+
+- connect data-feeder with wss
+- improve random file
+
+
 ## 1.0.14
 
 - withdraw tkinter window
