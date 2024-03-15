@@ -1,6 +1,6 @@
 ## 1.0.15
 
-- connect data-feeder with wss
+- add wss support
 - improve random file
 
 
