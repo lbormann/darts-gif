@@ -272,7 +272,7 @@ def get_random_file(list):
     if len(list) > 1:
         # more than 1 image in the list
         i = 0
-        while i<30:
+        while i < 30:
             ppi(f"Fetching random image from '{list}' for '{i}'th time")
             # try x times to find an image which is not yet shown
             randImageFound = random.choice(list)
@@ -363,6 +363,7 @@ def get_state(event, images_list):
             f.write(response.content)
     return ({'file': gif_filename}, 0)
     
+
 def on_key(event):
     global stop_display
     stop_display = True
@@ -391,7 +392,6 @@ def hide_image():
 
     if WEB == 0 or WEB == 2:
         root.withdraw()
-
 
 def render_image(event_name, image_list, ptext, duration):
     def stop_check():
@@ -470,7 +470,6 @@ def render_image(event_name, image_list, ptext, duration):
                     break
                 time.sleep(0.1)
             hide_image()
-
 
 def display_images(image_queue):
     global stop_display
