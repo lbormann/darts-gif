@@ -40,7 +40,7 @@ main_directory = os.path.dirname(os.path.realpath(__file__))
 
 
 
-VERSION = '1.0.15'
+VERSION = '1.0.16'
 
 DEFAULT_HOST_IP = '0.0.0.0'
 DEFAULT_WEB_PORT = '5001'
@@ -224,7 +224,8 @@ def on_message_data_feeder(ws, message):
     def process(*args):
         try:
             # ppi(message)
-            msg = ast.literal_eval(message)
+            # msg = ast.literal_eval(message)
+            msg = json.loads(message)
 
             if('game' in msg and 'mode' in msg['game']):
                 mode = msg['game']['mode']

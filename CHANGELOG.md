@@ -1,3 +1,8 @@
+## 1.0.16
+
+- fix ws bug
+
+
 ## 1.0.15
 
 - add wss support
