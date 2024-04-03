@@ -1,6 +1,7 @@
 pyinstaller==6.3.0
 requests==2.31.0
 python-socketio==5.11.2
+websocket-client==1.7.0
 websocket-server==0.6.4
 Pillow==10.2.0
 beautifulsoup4==4.12.3
