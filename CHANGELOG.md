@@ -1,3 +1,8 @@
+## 1.0.17
+
+- switch to socketio-client
+
+
 ## 1.0.16
 
 - fix ws bug

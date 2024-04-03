@@ -1,9 +1,9 @@
-pyinstaller==6.4.0
+pyinstaller==6.3.0
+requests==2.31.0
+python-socketio==5.11.2
+websocket-server==0.6.4
 Pillow==10.2.0
 beautifulsoup4==4.12.3
-requests==2.31.0
-websocket-client==1.5.1
-websocket-server==0.6.4
-Flask
+Flask==3.0.2
 waitress==2.1.2
 rel==0.4.9.5
