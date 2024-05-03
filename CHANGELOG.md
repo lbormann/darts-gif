@@ -1,3 +1,8 @@
+## 1.1.0
+
+- remove gfycat.com
+
+
 ## 1.0.17
 
 - switch to socketio-client

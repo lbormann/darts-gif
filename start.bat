@@ -1,5 +1,5 @@
 PUSHD .
-python "autodarts-gif.py" ^
+python "darts-gif.py" ^
 -MP "<absolute-folder-to-your-image-files>" ^
 -CON "127.0.0.1:8079" ^
 -HFO "51" ^

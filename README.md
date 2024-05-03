@@ -1,10 +1,10 @@
-# AUTODARTS-GIF
-[![Downloads](https://img.shields.io/github/downloads/lbormann/autodarts-gif/total.svg)](https://github.com/lbormann/autodarts-gif/releases/latest)
+# DARTS-GIF
+[![Downloads](https://img.shields.io/github/downloads/lbormann/darts-gif/total.svg)](https://github.com/lbormann/darts-gif/releases/latest)
 
-Autodarts-gif displays images accordingly to the state of a https://autodarts.io game. A running instance of https://github.com/lbormann/autodarts-caller is needed that sends thrown points from https://autodarts.io to this application.
+Darts-gif displays images accordingly to the state of a https://autodarts.io game. A running instance of https://github.com/lbormann/darts-caller is needed that sends thrown points from https://autodarts.io to this application.
 
 
-<img src="https://github.com/lbormann/autodarts-gif/blob/main/showcase/sc.gif?raw=true">
+<img src="https://github.com/lbormann/darts-gif/blob/main/showcase/sc.gif?raw=true">
 
 
 ## COMPATIBILITY
@@ -27,7 +27,7 @@ Autodarts-gif displays images accordingly to the state of a https://autodarts.io
 
 ### Desktop-OS:
 
-- If you're running a desktop-driven OS it's recommended to use [autodarts-desktop](https://github.com/lbormann/autodarts-desktop) as it takes care of starting, updating, configurating and managing multiple apps.
+- If you're running a desktop-driven OS it's recommended to use [darts-hub](https://github.com/lbormann/darts-hub) as it takes care of starting, updating, configurating and managing multiple apps.
 
 
 ### Headless-OS:
@@ -45,7 +45,7 @@ Autodarts-gif displays images accordingly to the state of a https://autodarts.io
 
 #### Get the project
 
-    git clone https://github.com/lbormann/autodarts-gif.git
+    git clone https://github.com/lbormann/darts-gif.git
 
 Go to download-directory and type:
 
@@ -65,7 +65,7 @@ Of course you can have a mixed configuration.
 
 ### Prerequisite
 
-* You need to have a running caller - https://github.com/lbormann/autodarts-caller - (latest version)
+* You need to have a running caller - https://github.com/lbormann/darts-caller - (latest version)
 
 ### Run by executable
 
@@ -73,7 +73,7 @@ Of course you can have a mixed configuration.
 
 Create a shortcut of the executable; right click on the shortcut -> select properties -> add arguments in the target input at the end of the text field.
 
-Example: C:\Downloads\autodarts-gif.exe -A1 "0-14" "bad score"
+Example: C:\Downloads\darts-gif.exe -A1 "0-14" "bad score"
 
 Save changes.
 Click on the shortcut to start the application.
@@ -83,7 +83,7 @@ Click on the shortcut to start the application.
 
 #### Example: Linux
 
-    python3 autodarts-gif.py -A1 "0-14" "bad score"
+    python3 darts-gif.py -A1 "0-14" "bad score"
 
 
 
@@ -106,11 +106,11 @@ Click on the shortcut to start the application.
 
 *`-CON / --connection`*
 
-Host address to data-feeder (autodarts-caller). By Default this is '127.0.0.1:8079' (means your local ip-address / usually you do NOT need to change this)
+Host address to data-feeder (darts-caller). By Default this is '127.0.0.1:8079' (means your local ip-address / usually you do NOT need to change this)
 
 *`-MP / --media_path`*
 
-You can set an absolute path to your media-file-directory, Make sure your image-files are in a supported file-format (gif,png,jpg,jpeg). Moreover make sure the given path doesn't reside inside main-directory (autodarts-gif).
+You can set an absolute path to your media-file-directory, Make sure your image-files are in a supported file-format (gif,png,jpg,jpeg). Moreover make sure the given path doesn't reside inside main-directory (darts-gif).
     
 *`-HFO / --high_finish_on`*
 
@@ -219,7 +219,7 @@ If you don't understand have a look at the example file **start.bat**
 
 ## !!! IMPORTANT !!!
 
-This application requires a running instance of autodarts-caller https://github.com/lbormann/autodarts-caller
+This application requires a running instance of darts-caller https://github.com/lbormann/darts-caller
 
 
 

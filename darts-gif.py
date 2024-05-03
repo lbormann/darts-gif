@@ -41,7 +41,7 @@ sio = socketio.Client(http_session=http_session, logger=True, engineio_logger=Tr
 
 
 
-VERSION = '1.0.17'
+VERSION = '1.1.0'
 
 DEFAULT_HOST_IP = '0.0.0.0'
 DEFAULT_WEB_PORT = '5001'
@@ -55,7 +55,6 @@ IMAGE_PARAMETER_SEPARATOR = "|"
 SUPPORTED_IMAGE_FORMATS = ['.gif', '.jpg', '.jpeg', '.png']
 SITES = [
     'tenor.com',  
-    'gfycat.com',
     'knowyourmeme.com'
 ]
 
@@ -255,15 +254,6 @@ def get_random_image_url(tag):
                 if gif_divs:
                     image_url_tag = random.choice(gif_divs).find('img')
                     image_url = image_url_tag.get('src') if image_url_tag else None
-
-            elif rand_site == 'gfycat.com':
-                site_url = 'https://gfycat.com/gifs/search/{tag}'.format(tag=tag)
-                response = requests.get(site_url)
-                html_content = response.text
-                soup = BeautifulSoup(html_content, 'html.parser')
-                image_url_tags = soup.find_all('img', {'class': 'image'})
-                if image_url_tags:
-                    image_url = random.choice(image_url_tags).get('src')
 
             elif rand_site == 'knowyourmeme.com':
                 site_url = 'https://knowyourmeme.com/search?context=images&q=type%3Agif+{tag}'.format(tag=tag)
@@ -573,7 +563,7 @@ if __name__ == "__main__":
     osRelease = platform.release()
     ppi('\r\n', None, '')
     ppi('##########################################', None, '')
-    ppi('       WELCOME TO AUTODARTS-GIF', None, '')
+    ppi('       WELCOME TO DARTS-GIF', None, '')
     ppi('##########################################', None, '')
     ppi('VERSION: ' + VERSION, None, '')
     ppi('RUNNING OS: ' + osType + ' | ' + osName + ' | ' + osRelease, None, '')
