@@ -1,5 +1,6 @@
 ## 1.1.0
 
+- rename application to darts-gif
 - remove gfycat.com
 
 
