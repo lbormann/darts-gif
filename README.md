@@ -104,59 +104,59 @@ Click on the shortcut to start the application.
 - -DEB / --debug [Default: 0] [Possible values: 0 | 1]
 
 
-*`-CON / --connection`*
+#### *`-CON / --connection`*
 
-Host address to data-feeder (darts-caller). By Default this is '127.0.0.1:8079' (means your local ip-address / usually you do NOT need to change this)
+<p>Host address to data-feeder (darts-caller). By Default this is '127.0.0.1:8079' (means your local ip-address / usually you do NOT need to change this)</p>
 
-*`-MP / --media_path`*
+#### *`-MP / --media_path`*
 
-You can set an absolute path to your media-file-directory, Make sure your image-files are in a supported file-format (gif,png,jpg,jpeg). Moreover make sure the given path doesn't reside inside main-directory (darts-gif).
+<p>You can set an absolute path to your media-file-directory, Make sure your image-files are in a supported file-format (gif,png,jpg,jpeg). Moreover make sure the given path doesn't reside inside main-directory (darts-gif).</p>
     
-*`-HFO / --high_finish_on`*
+#### *`-HFO / --high_finish_on`*
 
-Define what a highfinish means for you. Choose a score-value between '2' and '170'. This value is relevant for argument '-HF'. By default this is not set = no images for 'Highfinishes'.
+<p>Define what a highfinish means for you. Choose a score-value between '2' and '170'. This value is relevant for argument '-HF'. By default this is not set = no images for 'Highfinishes'.</p>
 
-*`-HF / --high_finish_images`*
+#### *`-HF / --high_finish_images`*
 
-Displays an image when a high-finish occurs.
-Define one image or a list of images. If you define a list, the program will randomly choose at runtime. For examples see below!
+<p>Displays an image when a high-finish occurs.
+Define one image or a list of images. If you define a list, the program will randomly choose at runtime.</p> For examples see below!
 
-*`-G / --game_won_images`*
+#### *`-G / --game_won_images`*
 
-Displays an image when a game won occurs.
-Define one image or a list of images. If you define a list, the program will randomly choose at runtime. For examples see below!
+<p>Displays an image when a game won occurs.
+Define one image or a list of images. If you define a list, the program will randomly choose at runtime.</p> For examples see below!
 
-*`-M / --match_won_images`*
+#### *`-M / --match_won_images`*
 
-Displays an image when a match won occurs.
-Define one image or a list of images. If you define a list, the program will randomly choose at runtime. For examples see below!
+<p>Displays an image when a match won occurs.
+Define one image or a list of images. If you define a list, the program will randomly choose at runtime.</p> For examples see below!
 
-*`-B / --busted_images`*
+#### *`-B / --busted_images`*
 
-Displays an image when a bust occurs.
-Define one image or a list of images. If you define a list, the program will randomly choose at runtime. For examples see below!
+<p>Displays an image when a bust occurs.
+Define one image or a list of images. If you define a list, the program will randomly choose at runtime.</p> For examples see below!
 
-*`-S{0-180} / --score_{0-180}_images`*
+#### *`-S{0-180} / --score_{0-180}_images`*
 
-Displays an image when a specific score occurs. You can define every score-value between 0 and 180.
-Define one image or a list of images. If you define a list, the program will randomly choose at runtime. For examples see below!
+<p>Displays an image when a specific score occurs. You can define every score-value between 0 and 180.
+Define one image or a list of images. If you define a list, the program will randomly choose at runtime.</p> For examples see below!
 
-*`-A{1-12} / --score_area_{1-12}_images`*
+#### *`-A{1-12} / --score_area_{1-12}_images`*
 
-Besides the definition of single score-values you can define up to 12 score-areas.
-Define one image or a list of images. If you define a list, the program will randomly choose at runtime. For examples see below!
+<p>Besides the definition of single score-values you can define up to 12 score-areas.
+Define one image or a list of images. If you define a list, the program will randomly choose at runtime.</p> For examples see below!
 
-*`-WEB / --web_gif`*
+#### *`-WEB / --web_gif`*
 
-If you set this to a '1' or '2' the app will host a web-endpoint to transfer every display-action to connected devices. A value '1' will display images only on connected devices. Value '2' will display images locally and on connected devices.
+<p>If you set this to a '1' or '2' the app will host a web-endpoint to transfer every display-action to connected devices. A value '1' will display images only on connected devices. Value '2' will display images locally and on connected devices.</p>
 
-*`-WEBP / --web_gif_port`*
+#### *`-WEBP / --web_gif_port`*
 
-If web-gif is enabled, you can configure a custom port. By default this is '5001'.
+<p>If web-gif is enabled, you can configure a custom port. By default this is '5001'.</p>
 
-*`-DEB / --debug`*
+#### *`-DEB / --debug`*
 
-Set this to value '1', to output extended event-information on console. By default this is '0'.
+<p>Set this to value '1', to output extended event-information on console. By default this is '0'.</p>
 
 
 
