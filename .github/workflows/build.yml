@@ -43,7 +43,13 @@ jobs:
             CMD_BUILD: pyinstaller -F -n darts-gif-mac --hidden-import=PIL._tkinter_finder -i resources/darts-gif.icns --add-data "templates:templates" darts-gif.py
             OUT_FILE_NAME: darts-gif-mac
             ASSET_MIME: application/zip
-
+          
+          - os: macos-13
+            TARGET: macos
+            CMD_BUILD: pyinstaller -F -n darts-gif-mac64 --hidden-import=PIL._tkinter_finder -i resources/darts-gif.icns --add-data "templates:templates" darts-gif.py
+            OUT_FILE_NAME: darts-gif-mac64
+            ASSET_MIME: application/zip
+          
           - os: ubuntu-20.04
             TARGET: ubuntu
             CMD_BUILD: pyinstaller -F -n darts-gif --hidden-import=PIL._tkinter_finder -i resources/darts-gif.svg --add-data "templates:templates" darts-gif.py
