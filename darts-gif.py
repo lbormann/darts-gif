@@ -4,7 +4,7 @@ from pathlib import Path
 import platform
 import random
 import argparse
-from urllib.parse import quote, unquote
+from urllib.parse import quote, unquote, urljoin
 import threading
 import logging
 import time
@@ -232,6 +232,21 @@ def sanitize_tag(tag):
     # ppi(tag)
     return tag    
    
+def absolutize_image_url(base_url, image_url):
+    """Resolve a scraped img src against its site.
+
+    Tenor serves at least one non-GIF promo tile inside div.Gif whose src is a
+    relative path; requests.get() raises MissingSchema on it. Returning an
+    absolute URL keeps the caller working instead of throwing.
+    """
+    if not image_url:
+        return None
+    if image_url.startswith(('http://', 'https://')):
+        return image_url
+    if image_url.startswith('//'):
+        return 'https:' + image_url
+    return urljoin(base_url, image_url)
+
 def get_random_image_url(tag):
     tag = sanitize_tag(tag)
     sites_tested = SITES.copy()
@@ -254,6 +269,7 @@ def get_random_image_url(tag):
                 if gif_divs:
                     image_url_tag = random.choice(gif_divs).find('img')
                     image_url = image_url_tag.get('src') if image_url_tag else None
+                    image_url = absolutize_image_url('https://tenor.com', image_url)
 
             elif rand_site == 'knowyourmeme.com':
                 site_url = 'https://knowyourmeme.com/search?context=images&q=type%3Agif+{tag}'.format(tag=tag)
@@ -266,6 +282,7 @@ def get_random_image_url(tag):
                     gif_div = random.choice(gif_divs)
                     image_url_tag = gif_div.find('img', {'class': ''})
                     image_url = image_url_tag.get('data-src') if image_url_tag else None
+                    image_url = absolutize_image_url('https://knowyourmeme.com', image_url)
 
         except Exception as e:
             print("error fetching image", str(e))
@@ -407,7 +424,12 @@ def display_images(image_queue):
         if event_name is None:
             break
 
-        render_image(event_name, image_list, ptext, duration)
+        try:
+            render_image(event_name, image_list, ptext, duration)
+        except Exception as e:
+            # Never let one bad image kill the display thread: before this guard
+            # a single failed fetch/decode ended playback until app restart.
+            ppe('Display failed for ' + str(ptext) + ': ', e)
 
 def schedule_image_close():
     global stop_display
